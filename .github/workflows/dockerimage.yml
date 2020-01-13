@@ -17,6 +17,9 @@ jobs:
         with:
           node-version: 10
       - name: npm install, build
+        env:
+          REACT_APP_API_URL: "http://64.225.45.28:3000"
+          REACT_APP_API_KEY: UPShow
         run: |
           npm install
           npm run build --if-present
