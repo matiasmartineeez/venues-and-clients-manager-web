@@ -1,11 +1,11 @@
-FROM node:12
+FROM node:10
 
 WORKDIR /app
 
-COPY package.json /app
+RUN yarn global add serve
 
-RUN npm i --production
+COPY build /app
 
-COPY ./ /app
+CMD serve -s app -l 80
 
-CMD npm start
+EXPOSE 80
