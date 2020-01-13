@@ -1,0 +1,27 @@
+name: Build
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 10
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10
+      - name: npm install, build
+        run: |
+          npm install
+          npm run build --if-present
+      - name: Build the Docker image
+        run: | 
+          docker login -u matiasmartineeez -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          docker build . --file Dockerfile --tag matiasmartineeez/venues-and-clients-app
+          docker push matiasmartineeez/venues-and-clients-app
